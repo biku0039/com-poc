@@ -74,9 +74,9 @@ export class HomeComponent implements OnInit {
 
   upload() {
     // console.log(this.uploadedFiles.length);
-    if (this.uploadedFiles.length === undefined){
-     console.log('Undefined value');
-    }else{
+    // if (this.uploadedFiles.length === undefined){
+    //  console.log('Undefined value');
+    // }else{
       const formData = new FormData();
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.uploadedFiles.length; i++) {
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
             console.log(error);
           }
         );
-    }
+    // }
   }
 
   createForm() {

@@ -1,9 +1,9 @@
 <div class="container mt-5 mb-4">
-<button type="button" class="btn btn-primary btn-lg" (click)="show()">Speech-To-Text</button>
+    <button type="button" class="btn btn-primary btn-lg" (click)="show()">Speech-To-Text</button>
 </div>
 <div class="container mb-4" *ngIf="flag">
-<span  class="btn btn-primary btn-lg mr-5" (click)="audioFile()" ng2FileSelect >audio</span>
-<span  class="btn btn-primary btn-lg" (click)="streamFile()">streamed audio</span>
+    <span class="btn btn-primary btn-lg mr-5" (click)="audioFile()" ng2FileSelect>audio</span>
+    <span class="btn btn-primary btn-lg" (click)="streamFile()">streamed audio</span>
 </div>
 <div class="container">
     <div class="col-md-12 p-0">
@@ -11,35 +11,35 @@
             <div class="col-md-6">
                 <div *ngIf="flag1" class="card shadow p-3">
                     <h3>Audio file upload</h3>
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <form action="/api/upload" method="post" enctype="multipart/form-data">
-                        <input (change)="fileChange($event)" type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
-                    </form>
-                    <label class="custom-file-label" for="inputGroupFile01">{{chooseFile}}</label>
-                </div>
-                <div class="input-group-prepend">
-                    <span class="input-group-text upload" (click)="upload()" id="btnUpload">Upload</span>
-                </div>
-            </div>
-                   <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <form action="/api/upload" method="post" enctype="multipart/form-data">
+                                <input (change)="fileChange($event)" type="file" class="custom-file-input point"
+                                    id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            </form>
+                            <label class="custom-file-label point" for="inputGroupFile01">{{chooseFile}}</label>
+                        </div>
+                            <button class="btn btn-primary point" (click)="upload()" id="btnUpload">Upload</button>
+                    </div>
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
                 </div>
             </div>
             <div class="col-md-6">
                 <div *ngIf="flag2" class="card shadow p-3">
-                <form [formGroup]="stream">
-                            <h3>Stream Recording</h3>
-                                  <div class="text-center mt-3">
-                                        <button class="btn btn-primary btn-lg" (click)="activateSpeechSearchMovie()">Start Listening</button>
-                                </div>
-            
-                            <h6> Finalized Text :</h6>
-                            <textarea value={{speechData}} id="myMessage" formControlName="speech" cols="30" rows="10" class="w-100"></textarea>
-                </form>
-            
+                    <form [formGroup]="stream">
+                        <h3>Stream Recording</h3>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-primary btn-lg" (click)="activateSpeechSearchMovie()">Start
+                                Listening</button>
+                        </div>
+
+                        <h6> Finalized Text :</h6>
+                        <textarea value={{speechData}} id="myMessage" formControlName="speech" cols="30" rows="10"
+                            class="w-100"></textarea>
+                    </form>
+
+                </div>
             </div>
         </div>
+
     </div>
-   
-</div>

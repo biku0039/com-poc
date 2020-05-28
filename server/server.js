@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({
 
 //file upload
 app.post('/api/upload', multipartMiddleware, (req, res) => {
+    console.log(req);
     res.json({
         'message': 'File uploaded succesfully.'
     });
