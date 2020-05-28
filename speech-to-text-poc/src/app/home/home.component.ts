@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   loading: boolean = false;
   uploadedFiles: any;
   url: any;
+  textFile: any;
   constructor(private fb: FormBuilder,
               private uploadService: UploadService,
               private speechRecognitionService: SpeechRecognitionService,
@@ -65,36 +66,19 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  upload(data) {
-    console.log(data);
+  upload() {
     const formData = new FormData();
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.uploadedFiles.length; i++) {
       formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
     }
     this.uploadService.uploadFile(formData)
-      .subscribe((response: any) => {
-        console.log('response received is ', response);
-        const path = response.path.split('\\')[1];
-        this.url = 'http://localhost:3000/' + path;
-        console.log('Audio Upload Success');
+      .subscribe( response => {
+        console.log(response);
+        this.textFile = response;
       });
   }
-      // const formData = new FormData();
-      // console.log(this.uploadedFiles[0], this.uploadedFiles[0].name);
-      // // tslint:disable-next-line:prefer-for-of
-      // for (let i = 0; i < this.uploadedFiles.length; i++) {
-      //   formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
-      // }
-      // this.uploadService.uploadFile(formData)
-      //   .subscribe(response => {
-      //     console.log('response received is ', response);
-      //   },
-      //     (error) => {
-      //       console.log(error);
-      //     }
-      //   );
-  // }
+
 
   createForm() {
     this.form = this.fb.group({

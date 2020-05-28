@@ -13,26 +13,34 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
-// app.post('/api/upload', multipartMiddleware, (req, res) => {
-//     console.log(req.files);
-//     res.json({
-//         'message': 'File uploaded succesfully.'
-//     });
-// });
-//file upload
-router.post("/api/upload", multipartMiddleware, (req, res, next) => {
-    console.log('Request URL:', req.originalUrl)
-    next()
-}, (req, res, next) => {
-    // console.log('Request Type:', req)
-    console.log(req.files.uploads[0].path);
-    next()
-}, (req, res) => {
-    res.json({
-        message: "File Uploaded successfully"
+function mp3towav(req, res, next){      
+    console.log("mp3 :" + req.files.uploads[0].path);
+    const spawn = require("child_process").spawn;
+    const process = spawn('python', ["./filetotext.py", req.files.uploads[0].path]);
+    process.stdout.on('data', function (data) {
+        res.setHeader("Content-Type", "text/html");
+        console.log(data.toString());
+        res.json(data.toString());
     })
-})
+}
+// function wavtotext(req, res,next){
+//     const spawn = require("child_process").spawn;
+//     const process = spawn('python', ["./wavtotext.py"]);
+//     console.log(process);
+//     process.stdout.on('data', function (data) {
+//         res.setHeader("Content-Type", "text/plain");
+//         res.json(data.toString());
+//     })
+//     console.log("wav to text conversion console");
+//     // next();
+//     // res.json("wav to text conversion")
+// }
+
+
+// router.get("/", multipartMiddleware, mp3towav, wavtotext)
+
+//file upload
+router.post("/api/upload", multipartMiddleware, mp3towav);
 
 // coommunicate with python script
 // app.get('/name', callName);
