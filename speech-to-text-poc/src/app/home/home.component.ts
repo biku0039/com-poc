@@ -49,11 +49,11 @@ export class HomeComponent implements OnInit {
   // Uploading File
   fileChange(element) {
     if (element.target.files[0].type === 'audio/mpeg'){
-      this.uploadedFiles = element.target.files[0];
+      this.uploadedFiles = element.target.files;
       this.chooseFile = element.target.files[0].name;
       console.log(this.uploadedFiles);
     }else{
-      alert('Enter only audio file');
+      alert('Enter only mp3 file');
     }
   }
   // onFileChange(event) {
@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit {
       for (let i = 0; i < this.uploadedFiles.length; i++) {
         formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
       }
+      console.log(formData);
       this.uploadService.uploadFile(formData)
         .subscribe(response => {
           console.log('response received is ', response);
