@@ -3,9 +3,7 @@ const app = express()
 const port = 3000
 const bodyParser = require("body-parser");
 const multipart = require('connect-multiparty');
-// const zerorpc = require("zerorpc");
-// const client = new zerorpc.Client();
-// client.connect(port);
+const router = express.Router();
 const multipartMiddleware = multipart({
     uploadDir: './uploads'
 });
@@ -15,29 +13,42 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
+// app.post('/api/upload', multipartMiddleware, (req, res) => {
+//     console.log(req.files);
+//     res.json({
+//         'message': 'File uploaded succesfully.'
+//     });
+// });
 //file upload
-app.post('/api/upload', multipartMiddleware, (req, res) => {
-    console.log(req.files);
+router.post("/api/upload", multipartMiddleware, (req, res, next) => {
+    console.log('Request URL:', req.originalUrl)
+    next()
+}, (req, res, next) => {
+    // console.log('Request Type:', req)
+    console.log(req.files.uploads[0].path);
+    next()
+}, (req, res) => {
     res.json({
-        'message': 'File uploaded succesfully.'
-    });
-});
+        message: "File Uploaded successfully"
+    })
+})
 
 // coommunicate with python script
-app.get('/name', callName);
+// app.get('/name', callName);
 
-function callName(req, res) {
+// function callName(req, res) {
 
-    var spawn = require("child_process").spawn;
+//     var spawn = require("child_process").spawn;
 
  
-    var process = spawn('python', ["./hello.py"]);
+//     var process = spawn('python', ["./filetotext.py"]);
 
 
-    process.stdout.on('data', function (data) {
-        res.send(data.toString());
-    })
-} 
+//     process.stdout.on('data', function (data) {
+//         res.send(data.toString());
+//     })
+// } 
 
 
 //calls the method on the python object
@@ -47,5 +58,7 @@ function callName(req, res) {
 //     }
 //     console.log(reply);
 // });
+
+app.use('/', router)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
