@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   loading: boolean = false;
   uploadedFiles: any;
+  url: any;
   constructor(private fb: FormBuilder,
               private uploadService: UploadService,
               private speechRecognitionService: SpeechRecognitionService,
@@ -48,46 +49,52 @@ export class HomeComponent implements OnInit {
 
   // Uploading File
   fileChange(element) {
-    if (element.target.files[0].type === 'audio/mpeg'){
-      this.uploadedFiles = element.target.files;
-      this.chooseFile = element.target.files[0].name;
-      console.log(this.uploadedFiles);
-    }else{
+    if (element.target.files[0].type === 'audio/mpeg') {
+      if (element.target.files && element.target.files[0]) {
+        this.chooseFile = element.target.files[0].name;
+        const reader = new FileReader();
+        reader.readAsDataURL(element.target.files[0]); // read file as data url
+        reader.onload = (event: any) => { // called once readAsDataURL is completed
+          this.url = event.target.result;
+        };
+        this.uploadedFiles = element.target.files;
+      }
+    }
+    else {
       alert('Enter only mp3 file');
     }
   }
-  // onFileChange(event) {
-  //   const reader = new FileReader();
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => {
-  //       this.form.get('fileInput').setValue({
-  //         filename: file.name,
-  //         filetype: file.type,
-  //         value: reader.result[1]
-  //       });
-  //     };
-  //   }
-  // }
 
-
-  upload() {
-      const formData = new FormData();
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.uploadedFiles.length; i++) {
-        formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
-      }
-      console.log(formData);
-      this.uploadService.uploadFile(formData)
-        .subscribe(response => {
-          console.log('response received is ', response);
-        },
-          (error) => {
-            console.log(error);
-          }
-        );
+  upload(data) {
+    console.log(data);
+    const formData = new FormData();
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.uploadedFiles.length; i++) {
+      formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
+    }
+    this.uploadService.uploadFile(formData)
+      .subscribe((response: any) => {
+        console.log('response received is ', response);
+        const path = response.path.split('\\')[1];
+        this.url = 'http://localhost:3000/' + path;
+        console.log('Audio Upload Success');
+      });
   }
+      // const formData = new FormData();
+      // console.log(this.uploadedFiles[0], this.uploadedFiles[0].name);
+      // // tslint:disable-next-line:prefer-for-of
+      // for (let i = 0; i < this.uploadedFiles.length; i++) {
+      //   formData.append('uploads[]', this.uploadedFiles[i], this.uploadedFiles[i].name);
+      // }
+      // this.uploadService.uploadFile(formData)
+      //   .subscribe(response => {
+      //     console.log('response received is ', response);
+      //   },
+      //     (error) => {
+      //       console.log(error);
+      //     }
+      //   );
+  // }
 
   createForm() {
     this.form = this.fb.group({
