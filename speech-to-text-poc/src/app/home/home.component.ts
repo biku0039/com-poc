@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
 
   // Uploading File
   fileChange(element) {
-    if (element.target.files[0].type === 'audio/mpeg' || element.target.files[0].type === 'audio/ogg' || element.target.files[0].type === 'audio/wav'){
+    if (element.target.files[0].type === 'audio/mpeg'){
       this.uploadedFiles = element.target.files[0];
       this.chooseFile = element.target.files[0].name;
       console.log(this.uploadedFiles);
@@ -73,10 +73,6 @@ export class HomeComponent implements OnInit {
 
 
   upload() {
-    // console.log(this.uploadedFiles.length);
-    // if (this.uploadedFiles.length === undefined){
-    //  console.log('Undefined value');
-    // }else{
       const formData = new FormData();
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.uploadedFiles.length; i++) {
@@ -90,7 +86,6 @@ export class HomeComponent implements OnInit {
             console.log(error);
           }
         );
-    // }
   }
 
   createForm() {
