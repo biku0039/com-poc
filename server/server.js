@@ -23,18 +23,6 @@ function mp3totext(req, res, next){
         res.json(data.toString());
     })
 }
-// function wavtotext(req, res,next){
-//     const spawn = require("child_process").spawn;
-//     const process = spawn('python', ["./wavtotext.py"]);
-//     console.log(process);
-//     process.stdout.on('data', function (data) {
-//         res.setHeader("Content-Type", "text/plain");
-//         res.json(data.toString());
-//     })
-//     console.log("wav to text conversion console");
-//     // next();
-//     // res.json("wav to text conversion")
-// }
 
 
 // router.get("/", multipartMiddleware, mp3towav, wavtotext)
