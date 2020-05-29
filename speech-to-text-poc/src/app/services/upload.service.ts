@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs-compat/add/operator/map';
 import { HttpClient } from '@angular/common/http';
-import { Upload } from '../models/upload';
 
 
 @Injectable({

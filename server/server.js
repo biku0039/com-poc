@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-function mp3towav(req, res, next){      
+function mp3totext(req, res, next){      
     console.log("mp3 :" + req.files.uploads[0].path);
     const spawn = require("child_process").spawn;
     const process = spawn('python', ["./filetotext.py", req.files.uploads[0].path]);
@@ -40,7 +40,7 @@ function mp3towav(req, res, next){
 // router.get("/", multipartMiddleware, mp3towav, wavtotext)
 
 //file upload
-router.post("/api/upload", multipartMiddleware, mp3towav);
+router.post("/api/upload", multipartMiddleware, mp3totext);
 
 // coommunicate with python script
 // app.get('/name', callName);
