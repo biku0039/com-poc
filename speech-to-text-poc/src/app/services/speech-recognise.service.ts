@@ -23,6 +23,7 @@ export class SpeechRecognitionService {
             this.speechRecognition.continuous = true;
             this.speechRecognition.lang = 'en-us';
             this.speechRecognition.maxAlternatives = 1;
+            this.speechRecognition.interimResults = true;
 
             this.speechRecognition.onresult = speech => {
                 // tslint:disable-next-line:no-inferrable-types
@@ -51,7 +52,8 @@ export class SpeechRecognitionService {
 
 
             this.speechRecognition.onend = () => {
-                observer.complete();
+                // observer.complete();
+                console.log('Speech recognition ended');
             };
 
 
@@ -65,6 +67,7 @@ export class SpeechRecognitionService {
         }
 
         alert('stop');
+
     }
 }
 

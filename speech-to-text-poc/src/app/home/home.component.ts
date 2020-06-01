@@ -125,6 +125,10 @@ export class HomeComponent implements OnInit {
         });
   }
 
+  onSubmit() {
+    this.speechRecognitionService.DestroySpeechObject();
+  }
+
   }
 
 
