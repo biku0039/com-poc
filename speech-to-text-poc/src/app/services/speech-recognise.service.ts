@@ -66,7 +66,7 @@ export class SpeechRecognitionService {
             this.speechRecognition.stop();
         }
 
-        alert('stop');
+        // alert('stop');
 
     }
 }
