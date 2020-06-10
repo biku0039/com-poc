@@ -1,11 +1,12 @@
-<div class="container mt-5 mb-4">
+<div class="container">
+<div class="mt-5 mb-4 text-center">
     <button type="button" class="btn btn-primary btn-lg" (click)="show()">Speech-To-Text</button>
 </div>
-<div class="container mb-4" *ngIf="flag">
+<div class="mb-4 text-center" *ngIf="flag">
     <span class="btn btn-primary btn-lg mr-5" (click)="audioFile()" ng2FileSelect>audio</span>
     <span class="btn btn-primary btn-lg" (click)="streamFile()">streamed audio</span>
 </div>
-<div class="container">
+
     <div class="col-md-12 p-0">
         <div class="row">
             <div class="col-md-6">
@@ -21,6 +22,7 @@
                         </div>
                             <button class="btn btn-primary point" (click)="upload()" id="btnUpload">Upload</button>
                     </div>
+                    <h6 class="mb-3"> Finalized Text :</h6>
                     <textarea value = {{textFile}} name="myAudioMessage" id="myAudioMessage" cols="30" rows="10"></textarea>
                 </div>
             </div>
@@ -43,5 +45,5 @@
                 </div>
             </div>
         </div>
-
     </div>
+</div>
